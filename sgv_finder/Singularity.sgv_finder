@@ -1,0 +1,23 @@
+# Metagenomics Singularity environment definition for ICRA and SGV Finder
+# Ryan Brewster
+# rbrewster@stanford.edu
+# June 2019
+
+bootstrap: docker
+from: ubuntu:19.04
+
+# this command assumes at least singularity 2.3
+%environment
+		PATH="/usr/local/anaconda/bin:$PATH"
+
+# install anaconda
+  if [ ! -d /usr/local/anaconda ]; then
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+          -O ~/anaconda.sh && \
+        bash ~/anaconda.sh -b -p /usr/local/anaconda && \
+        rm ~/anaconda.sh
+  fi
+	export PATH="/usr/local/anaconda/bin:$PATH"
+
+	conda install numpy=1.13.3 -c conda-forge biopython=1.68 ujson=1.35 pandas=0.23.4 scipy=1.1.0 bokeh=0.12.6 python=2.7.8 cxx-compiler cython
+
