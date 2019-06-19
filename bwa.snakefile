@@ -1,3 +1,6 @@
+rule all:
+	input:"filtered_bam/{s}.filtered.bam".format(s = config['sample'])
+
 rule bwa_index:
 	input: config['reference']
 	output:
@@ -16,7 +19,7 @@ rule bwa_index:
 rule bwa_align:
 	input:
 		ref_index = rules.bwa_index.output,
-		r = lambda wildcards: config["reads"][wildcards.sample]
+		r = config["reads"].split(",") #splits sample file names into list by comma
 	output:
 		"filtered_bam/{sample}.filtered.bam"
 	resources:
@@ -26,9 +29,9 @@ rule bwa_align:
 	params:
 		ref = config['reference'],
 		qual=config['mapq'],
-		nm=config['n_mismatches']
+		# nm=config['n_mismatches']
 	shell:
 		"bwa mem -t {threads} {params.ref} {input.r} | "\
 		"samtools view -b -q {params.qual} | "\
-		"bamtools filter -tag 'NM:<={params.nm}' | "\
+		# "bamtools filter -tag 'NM:<={params.nm}' | "\
 		"samtools sort --threads {threads} -o {output}"
