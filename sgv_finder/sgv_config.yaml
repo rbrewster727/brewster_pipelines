@@ -1,0 +1,41 @@
+#Specify project directories
+
+preprocessed_reads_directory: 'labs/asbhatt/rbrewster/sgv_test_2/' #Absolute path to preprocessed FASTQ files
+output_directory: '/labs/asbhatt/rbrewster/sgv_test_2/' #Absolute path to project output files
+SGV_code_directory: '/labs/asbhatt/rbrewster/sgv_finder/SGVFinder/src' #Absolute path to ICRA and SGV Finder code
+
+# ICRA Parameters
+
+icra: 
+  max_mismatch: 8 #How many mismatch are considered acceptable, default = 8
+  ignore_lengths: True #Should genome lengths be ignored when calculating abundances, default = True
+  epsilon: 1e-6 #The stop criteria. Epsilon is the euclidean distance between the internal vectors of element abundances under which ICRA stops.', default = 1e-6
+  max_iterations: 100 #An upper limit to the number of iterations ICRA will run, default = 100
+  min_bins: 10 #The minimum number of bins per genomic element, default = 10
+  max_bins: 100 #The maximum number of bins per genomic element, default = 100
+  min_reads: 100 #Minimal number of reads mapped to a genomic element for it to be considered present in the sample, default = 100
+  dense_region_coverage: 60 #The percentage of the genome examined for coverage purposes, default = 60
+  length_minimum: 1e5 #Minimal genome length considered, default = 1e5
+  length_maximum: 2e7 #Maximal genome length considered, default = 2e7
+  usage: 'genomes' #Whether ICRA is mapping to the default db (genomes) or to the db used in the paper for CAMI (cami)', default = 'genomes', choices = ['cami', 'genomes'])
+
+# SGV_PerFile Parameters
+
+sgv_perfile:
+  x_coverage: 0.01 #The desired coverage across the genome in units of 100bp reads. This parameter is used to determine bin size: bin_size = rate_param/x_coverage, default = 0.01
+  rate_param: 10 #The lower limit for the median number of reads per genomic bin. Genomes with coverage lower than rate_param will be discarded from the analysis, default = 10
+
+# SGV Finder Parameters
+
+sgv_finder:
+  x_coverage: 0.1 #The desired coverage across the genome in units of 100bp reads. This parameter is used to determine bin size, default = 0.1
+  rate_param: 10 #The lower limit for the median number of reads per genomic bin. Genomes with coverage lower than rate_param will be discarded from the analysis, default = 10
+  min_samp_cutoff: 75 #Minimum number of samples in which a microbe exists with sufficient coverage to be considered in the analysis, default = 75
+  dels_detect_thresh: 0.25 #Determines the minimum and maximum ratio of samples for which a bin is considered a deletion-SGV, default = 0.25
+  real_del_thresh: 0.95 #Threshold above which a bin is considered deleted for all individuals, default = 0.95
+  vsgv_dissim_thresh: 0.125 #Maximal correlation dissimilarity for concatenation and clustering of variable SGV bins. Correlation dissimilarity is defined as calculated as 1-((rho(u,v)+1)/2), where rho is the Spearman correlation and u, v are the bin vectors being compared, default = 0.125
+  dels_cooc_thresh: 0.25  #Maximal cooccurrence dissimilarity for concatenation and clustering of deletion SGV bins. Coocurrence dissimilarity is defined as the proportion of samples which are in disagreement on the deletion-state of the two bins being compared (wherein one bin is deleted and one is retained for the same sample) out of all samples that harbor the microbe, default = 0.25
+  vsgv_clip_quantile: 0.02 #Determines clipping performed on the distribution of bin values prior to fitting a distribution for the detection of variable-SGVs (Default=0.02 corresponding to clipping outside the 2nd to 98th percentiles), default = 0.02)
+  vsgv_fit_interval: 0.95 #Significance cutoff for the fitted distribution above which a bin is considered variable, default = 0.95
+  vsgv_fit_method: 'betaprime' #Determines the distribution being fit on bin values (either a Beta-prime or Chi-square distribution, default = 'betaprime', choices = ['betaprime', 'chisq'])
+  vsgv_dense_perc: 85 #The percent of the data that is considered when standardizing the bin values of a microbe in a sample. The algorithm chooses the densest part of the data. If a percentage p is selected, the algorithm calculates a subset x of the vector of bins such that max(x)-min(x) is minimal and |x| = p*length(bins). The mean and standard deviation of this vector are calcuated and used to standardize the bin vector, default = 85
