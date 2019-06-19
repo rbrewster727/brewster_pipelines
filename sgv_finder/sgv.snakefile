@@ -69,6 +69,7 @@ rule icra:
 	resources:
 		time = 10,
 		mem = 32
+	singularity: "shub://rbrewster727/brewster_pipelines"
 	shell: """
 		mkdir {PROJECT_DIR}/01_icra
 		python {SGV_DIR}/ICRA_cmd.py {params.outfol} {input} --pe --max_mismatch {params.max_mismatch} --ignore_lengths {params.ignore_lengths} --epsilon {params.epsilon} --max_iterations {params.max_iterations} --min_bins {params.min_bins} --max_bins {params.max_bins} --min_reads {params.min_reads} --dense_region_coverage {params.dense_region_coverage} --length_minimum {params.length_minimum} --length_maximum {params.length_maximum} --usage {params.usage} --use_theta 
@@ -86,6 +87,7 @@ rule sgv_perfile:
 	resources:
 		time = 10,
 		mem = 32
+	singularity: "shub://rbrewster727/brewster_pipelines"
 	shell: """
 		mkdir {PROJECT_DIR}/02_sgv_perfile
 		AVG=$(awk 'BEGIN { t=0.0;sq=0.0; n=0;} ;NR%4==2 {n++;L=length($0);t+=L;sq+=L*L;}END{m=t/n;printf("%f",m);}'  {sample}_{read}.fastq)
@@ -112,6 +114,7 @@ rule sgv_finder
 		vsgv_fit_method = config['sgv_finder']['vsgv_fit_method'],
 		vsgv_dense_perc = config['sgv_finder']['vsgv_dense_perc']
 	threads: 4 
+	singularity: "shub://rbrewster727/brewster_pipelines"
 	resources:
 		time = 10,
 		mem = 32
