@@ -19,5 +19,6 @@ from: ubuntu:19.04
   fi
 	export PATH="/usr/local/anaconda/bin:$PATH"
 
-	conda install numpy=1.13.3 -c conda-forge biopython=1.68 ujson=1.35 pandas=0.23.4 scipy=1.1.0 bokeh=0.12.6 python=2.7.8 cxx-compiler cython
+	conda install numpy=1.13.3 ujson=1.35 pandas=0.23.4 scipy=1.1.0 bokeh=0.12.6 python=2.7.8 cython
+	conda install -c conda-forge biopython=1.68 cxx-compiler
 
