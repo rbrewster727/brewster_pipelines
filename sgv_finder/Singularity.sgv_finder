@@ -20,7 +20,8 @@ from: ubuntu:19.04
 
     apt-get install -y build-essential
 
-    # install anaconda
+    # Install anaconda
+
     if [ ! -d /usr/local/anaconda ]; then
          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
             -O ~/anaconda.sh && \
@@ -31,4 +32,14 @@ from: ubuntu:19.04
 
 	conda install numpy=1.13.3 ujson=1.35 pandas=0.23.4 scipy=1.1.0 bokeh=0.12.6 python=2.7.8 cython
 	conda install -c conda-forge biopython=1.68 cxx-compiler
+
+	# Install GEM-Mapper
+
+	wget https://sourceforge.net/projects/gemlibrary/files/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2
+
+	tar -jxvf GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2
+
+	mv GEM-binaries-Linux-x86_64-core_i3-20130406-045632 gem-mapper
+
+	export PATH="~/gem-mapper/bin:$PATH"
 
