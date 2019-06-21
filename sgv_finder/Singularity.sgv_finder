@@ -9,6 +9,7 @@ from: ubuntu:19.04
 # this command assumes at least singularity 2.3
 %environment
 		PATH="/usr/local/anaconda/bin:$PATH"
+		PATH="~/gem-mapper/bin:$PATH"
 
 %post
     apt-get update
