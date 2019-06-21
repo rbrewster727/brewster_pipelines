@@ -9,7 +9,7 @@ from: ubuntu:19.04
 # this command assumes at least singularity 2.3
 %environment
 		PATH="/usr/local/anaconda/bin:$PATH"
-		PATH="~/gem-mapper/bin:$PATH"
+		PATH="/root/gem-mapper/bin:$PATH"
 
 %post
     apt-get update
@@ -41,6 +41,4 @@ from: ubuntu:19.04
 	tar -jxvf GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2
 
 	mv GEM-binaries-Linux-x86_64-core_i3-20130406-045632 gem-mapper
-
-	export PATH="~/gem-mapper/bin:$PATH"
 
